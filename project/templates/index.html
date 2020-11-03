@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+{% block content %}
+
+	{% if current_user.is_authenticated %}
+		<div class="row justify-content-center">
+			<div class="col-md-10">
+				 <h4> Hey {{current_user.username}}, What's on your Mind? <a href="{{url_for('newPostPage')}}">New Post</a></h4>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-md-10">
+				<h2>Feeds</h2>
+				<hr>
+				{% for post in posts.items %}
+					<div class="row justify-content-center">
+						<div class="col-md-12">
+							<h4><a class="article-title text-dark" href="{{url_for('individualPostPage',post_id=post.id)}}">{{ post.title }}</a></h4>	
+							
+							<small class="text-muted">Created by</small> 
+							<a class="font-weight-bold text-primary" href="{{url_for('anyProfilePage',username
+							=post.author.username)}}">{{post.author.username}}</a>
+							<small class="text-muted">on {{post.date_posted.strftime('%d-%m-%Y')}}</small>
+
+							<p class="article-content post-wrap" >{{ post.content }}</p>
+						</div>
+					</div>
+					<hr>
+				{% endfor %}
+
+				<div class="d-flex justify-content-center mb-5">
+					<div class="col-12">
+						<center>
+						{% for page_num in posts.iter_pages(left_edge=1, right_edge=1) %}
+							{% if page_num %}
+								{% if posts.page == page_num %}
+										<a class="text-dark border-bottom border-dark font-weight-bold mb-4 ml-2" href="{{url_for('homePage',page=page_num)}}">{{page_num}}</a>
+								{% else %}
+									<a class="font-weight-bold mb-4 ml-2" href="{{url_for('homePage',page=page_num)}}">{{page_num}}</a>
+								{% endif %}
+							{% else %}
+								...
+							{% endif %}	
+						{% endfor %}
+						</center>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %} Post {% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-3">
+	<div class="col-md-10">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<h4 class="article-title text-dark">{{ post.title }}</h4>	
+				
+				<small class="text-muted">Created by</small> 
+				<a class="font-weight-bold text-primary" href="{{url_for('anyProfilePage',username
+				=post.author.username)}}">{{post.author.username}}</a>
+				<small class="text-muted">on {{post.date_posted.strftime('%d-%m-%Y')}}</small>
+
+				<p class="article-content post-wrap">{{ post.content }}</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row justify-content-center mb-5">
+			<div class="col-md-10">
+				<h5>Commets Section</h5>
+				<form method="POST" action="{{url_for('newCommentPage',post_id=post.id)}}">
+					<textarea class="form-control" name="comment" required autocomplete="off" placeholder="Type a Comment"></textarea>
+					<button class="btn btn-primary btn-sm mt-2 mb-2" type="submit">Post</button>
+				</form>
+				{% for comment in post.comments %}
+				<div class="row justify-content-center">
+					<div class="col-md-12">
+						<span>
+							<span class="font-weight-bold"><a href="{{url_for('anyProfilePage',username
+							=comment.author.username)}}" class="text-dark">{{comment.author.username }}</a></span> 
+							{{comment.content}}
+							{% if comment.author==current_user %}
+								<small><a class="text-danger ml-2" href="{{url_for('deleteCommentPage',post_id=post.id,comment_id=comment.id)}}">delete</a> </small>
+							{% endif %}
+						</span>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			
+		</div>
+	</div>
+</div>
+
+{% endblock %}
