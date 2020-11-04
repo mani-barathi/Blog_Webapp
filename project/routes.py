@@ -61,7 +61,7 @@ def logoutPage():
 	return redirect(url_for('loginPage'))
 
 
-@app.route('/account',methods=['GET'])
+@app.route('/profile',methods=['GET'])
 @login_required
 def accountPage():
 	page = request.args.get('page',1,type=int)
