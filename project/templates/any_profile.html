@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
-{% block title %} {{current_user.username}}'s Page {% endblock %}
+{% block title %} {{username}}'s Page {% endblock %}
 {% block content %}
 	
 	<div class="row justify-content-center mt-3">
 		<div class="col-md-10">
 			<h2>{{username}}'s posts</h2>
 			<hr>
+			{% if not posts.items  %}
+				<p class="text-center font-weight-bold">No Post's Yet</p>
+			{% endif %}
 			<div class="container">
 				{% if posts %}
 					{% for post in posts.items %}
@@ -28,9 +31,9 @@
 						{% for page_num in posts.iter_pages(left_edge=1, right_edge=1) %}
 							{% if page_num %}
 								{% if posts.page == page_num %}
-										<a class="text-dark border-bottom border-dark font-weight-bold mb-4 ml-2" href="{{url_for('homePage',page=page_num)}}">{{page_num}}</a>
+										<a class="text-dark border-bottom border-dark font-weight-bold mb-4 ml-2" href="{{url_for('anyProfilePage',username=username,page=page_num)}}">{{page_num}}</a>
 								{% else %}
-									<a class="font-weight-bold mb-4 ml-2" href="{{url_for('homePage',page=page_num)}}">{{page_num}}</a>
+									<a class="font-weight-bold mb-4 ml-2" href="{{url_for('anyProfilePage',username=username,page=page_num)}}">{{page_num}}</a>
 								{% endif %}
 							{% else %}
 								...
@@ -39,8 +42,7 @@
 						</center>
 					</div>
 				</div>
-				{% else %}
-					<p>No Post's Yet</p>
+					
 				{% endif %}
 			</div>
 		</div>

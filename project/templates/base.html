@@ -28,17 +28,17 @@
         {% if current_user.is_authenticated %}
 
             <div class="d-flex justify-content-end">
-                <h6 class="text-right mt-2"><span><a href="{{url_for('homePage')}}">Home</a></span> </h6>
+                <h6 class="text-right mt-2"><span><a href="{{url_for('homePage')}}" id="home-link" class="">Home</a></span> </h6>
 
-                <h6 class="text-right mt-2 ml-3"><span><a href="{{url_for('accountPage')}}">My Posts</a></span> </h6>
+                <h6 class="text-right mt-2 ml-3"><span><a href="{{url_for('accountPage')}}" id="myposts-link" class="">My Posts</a></span> </h6>
 
-                <h6 class="text-right mt-2 ml-3"><span><a href="{{url_for('logoutPage')}}">Logout</a></span></h6>
+                <h6 class="text-right mt-2 ml-3 "><span><a href="{{url_for('logoutPage')}}" id="logout-link" class="">Logout</a></span></h6>
             </div>
         {% else %}
             <div class="d-flex justify-content-end">
-                <h6 class="text-right mt-2"> <span><a href="{{url_for('loginPage')}}">LogIn</a></span></h6> 
+                <h6 class="text-right mt-2"> <span><a href="{{url_for('loginPage')}} " id="login-link">LogIn</a></span></h6> 
 
-                <h6 class="text-right mt-2 ml-3"> <span><a href="{{url_for('signUpPage')}}">SignUp</a></span></h6> 
+                <h6 class="text-right mt-2 ml-3"> <span><a href="{{url_for('signUpPage')}}" id="signup-link">SignUp</a></span></h6> 
             </div>
             
         {% endif %}

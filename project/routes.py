@@ -73,11 +73,11 @@ def accountPage():
 @login_required
 def anyProfilePage(username):
 	user = User.query.filter_by(username=username).first()
-	if user:
-		page = request.args.get('page',1,type=int)
+	page = request.args.get('page',1,type=int)
+	if user and page:
 		posts = Posts.query.filter_by(author=user).order_by(desc(Posts.id)).paginate(per_page=5,page=page)
 		return render_template('any_profile.html',posts=posts,username=username)
-	return abort(404,'Route Does Not Exists')
+	abort(404,'Route Does Not Exists')
 
 
 @app.route('/post/<int:post_id>',methods=['GET'])
