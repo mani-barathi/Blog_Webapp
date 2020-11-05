@@ -17,11 +17,11 @@
 		</div>
 		<hr>
 		<div class="row justify-content-center mb-5">
-			<div class="col-md-10">
+			<div class="col-md-10" id="comments-column">
 				<h5>Commets Section</h5>
-				<form method="POST" action="{{url_for('newCommentPage',post_id=post.id)}}">
-					<textarea class="form-control" name="comment" required autocomplete="off" placeholder="Type a Comment"></textarea>
-					<button class="btn btn-primary btn-sm mt-2 mb-2" type="submit">Post</button>
+				<form id="comment-form">
+					<textarea class="form-control" name="comment-text" required autocomplete="off" placeholder="Type a Comment"></textarea>
+					<button data-comment="{{post.id}}" id="comment-btn" class="btn btn-primary btn-sm mt-2 mb-2" type="submit">Post</button>
 				</form>
 				{% for comment in post.comments %}
 				<div class="row justify-content-center">
@@ -31,7 +31,7 @@
 							=comment.author.username)}}" class="text-dark">{{comment.author.username }}</a></span> 
 							{{comment.content}}
 							{% if comment.author==current_user %}
-								<small><a class="text-danger ml-2" href="{{url_for('deleteCommentPage',post_id=post.id,comment_id=comment.id)}}">delete</a> </small>
+								<small><a class="text-danger ml-2 delete-links" href="#" data-post_id={{post.id}} data-comment_id={{comment.id}}>delete</a> </small>
 							{% endif %}
 						</span>
 					</div>
@@ -39,9 +39,9 @@
 				{% endfor %}
 			</div>
 
-			
 		</div>
 	</div>
 </div>
 
+<script src="{{url_for('static',filename='js/comments.js')}}" type="text/javascript"></script>
 {% endblock %}

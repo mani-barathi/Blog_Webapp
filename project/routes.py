@@ -1,4 +1,4 @@
-from flask import render_template,request,flash,redirect,url_for,abort
+from flask import render_template,request,flash,redirect,url_for,abort,jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import desc
 from . import app, db, bcrypt
@@ -45,7 +45,7 @@ def loginPage():
 			next_page = request.args.get('next')
 			if next_page:
 				print(next_page) 
-				return redirect(next_page) # will directly have the 
+				return redirect(next_page) # will directly have the routes function name
 			return redirect(url_for('homePage'))
 		flash('Login Unsuccessful. Please Check the username and password','warning')
 
@@ -144,31 +144,74 @@ def updatePostPage(post_id):
 		abort(404,'Route Does Not Exists !')
 
 
-@app.route('/comment/new/<int:post_id>',methods=["GET","POST"])
+@app.route('/comment/new/',methods=["POST"])
 @login_required
-def newCommentPage(post_id):
+def newCommentRoute():
+	post_id = request.json['post_id']
+	# user_id = current_user.id
+	comment = request.json['comment']
 	post = Posts.query.get(post_id)
-	user_comment = request.form['comment']
-	if request.method == 'POST' and post:
-		comment = Comment(author=current_user, content=user_comment, post=post )
+	# user = User.query.get(user_id)
+	if post and current_user:
+		comment = Comment(author=current_user, content=comment, post=post)
 		db.session.add(comment)
 		db.session.commit()
-		return redirect(url_for('individualPostPage',post_id=post.id))
+		print(f'########{comment.id}-->{post.id}-->{current_user.username}')
+		return jsonify(is_done=True,content=comment.content,comment_id=comment.id,username=current_user.username,post_id=post.id)
 	else:
-		abort(404,'Route Does Not Exists !')
+		return jsonify(is_done=False)
 
 
-@app.route('/comment/delete/<int:post_id><int:comment_id>',methods=["GET","POST"])
+@app.route('/comment/delete/',methods=["POST"])
 @login_required
-def deleteCommentPage(post_id,comment_id):
+def deleteCommentRoute():
+	post_id = request.json['post_id']
+	comment_id = request.json['comment_id']
+
 	post = Posts.query.get(post_id)
-	user_comment = Comment.query.get(comment_id)
-	if user_comment and post:
-		if user_comment.author == current_user:
-			db.session.delete(user_comment)
+	comment = Comment.query.get(comment_id)
+	if comment and post:
+		if comment.author == current_user:
+			db.session.delete(comment)
 			db.session.commit()
-			return redirect(url_for('individualPostPage',post_id=post.id))
+			print("######deleted")
+			return jsonify(is_done=True)
 		else:
-			abort(403,'UnAuthorized Access !')
+			return jsonify(is_done=False)
 	else:
-		abort(404,'Route Does Not Exists !')
+		return jsonify(is_done=False)
+
+
+
+
+
+
+# @app.route('/comment/new/<int:post_id>',methods=["GET","POST"])
+# @login_required
+# def newCommentPage(post_id):
+# 	post = Posts.query.get(post_id)
+# 	user_comment = request.form['comment']
+# 	if request.method == 'POST' and post:
+# 		comment = Comment(author=current_user, content=user_comment, post=post )
+# 		db.session.add(comment)
+# 		db.session.commit()
+# 		return redirect(url_for('individualPostPage',post_id=post.id))
+# 	else:
+# 		abort(404,'Route Does Not Exists !')
+
+
+# @app.route('/comment/delete/<int:post_id>/<int:comment_id>',methods=["GET","POST"])
+# @login_required
+# def deleteCommentPage(post_id,comment_id):
+# 	post = Posts.query.get(post_id)
+# 	user_comment = Comment.query.get(comment_id)
+# 	if user_comment and post:
+# 		if user_comment.author == current_user:
+# 			db.session.delete(user_comment)
+# 			db.session.commit()
+# 			print("######deleted")
+# 			return redirect(url_for('individualPostPage',post_id=post.id))
+# 		else:
+# 			abort(403,'UnAuthorized Access !')
+# 	else:
+# 		abort(404,'Route Does Not Exists !')
