@@ -1,6 +1,7 @@
 from flask_login import UserMixin
+# from flask import current_app
 from datetime import datetime
-from . import db,app, login_manager
+from MainApp import db, login_manager
 
 # This will load the User the session
 @login_manager.user_loader

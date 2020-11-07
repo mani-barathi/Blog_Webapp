@@ -16,12 +16,12 @@
 				<div class="col-md-12">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-md-10">
-							<h4><a class="article-title text-dark" href="{{url_for('individualPostPage',post_id=post.id)}}">{{ post.title }}</a></h4>
+							<h4><a class="article-title text-dark" href="{{url_for('posts.individualPostPage',post_id=post.id)}}">{{ post.title }}</a></h4>
 							<small class="text-muted">Created on {{post.date_posted.strftime('%d-%m-%Y')}}</small>	
 						</div>
 						<div class="col-md-2">
-							<a href="{{url_for('updatePostPage',post_id=post.id) }}" class="btn btn-secondary btn-sm mr-2" title="Edit this Post"><i class="fas fa-pencil-alt"></i></a>
-							<a href="{{url_for('deletePostPage',post_id=post.id) }}" class="btn btn-danger btn-sm" title="Delete this Post"><i class="fas fa-trash"></i></a>
+							<a href="{{url_for('posts.updatePostPage',post_id=post.id) }}" class="btn btn-secondary btn-sm mr-2" title="Edit this Post"><i class="fas fa-pencil-alt"></i></a>
+							<a href="{{url_for('posts.deletePostPage',post_id=post.id) }}" class="btn btn-danger btn-sm" title="Delete this Post"><i class="fas fa-trash"></i></a>
 						</div>
 					</div>
 					
@@ -37,9 +37,9 @@
 					{% for page_num in posts.iter_pages(left_edge=1, right_edge=1) %}
 						{% if page_num %}
 							{% if posts.page == page_num %}
-									<a class="text-dark border-bottom border-dark font-weight-bold mb-4 ml-2" href="{{url_for('accountPage',page=page_num)}}">{{page_num}}</a>
+									<a class="text-dark border-bottom border-dark font-weight-bold mb-4 ml-2" href="{{url_for('users.accountPage',page=page_num)}}">{{page_num}}</a>
 							{% else %}
-								<a class="font-weight-bold mb-4 ml-2" href="{{url_for('accountPage',page=page_num)}}">{{page_num}}</a>
+								<a class="font-weight-bold mb-4 ml-2" href="{{url_for('users.accountPage',page=page_num)}}">{{page_num}}</a>
 							{% endif %}
 						{% else %}
 							...

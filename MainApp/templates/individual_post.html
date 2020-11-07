@@ -8,7 +8,7 @@
 				<h4 class="article-title text-dark">{{ post.title }}</h4>	
 				
 				<small class="text-muted">Created by</small> 
-				<a class="font-weight-bold text-primary" href="{{url_for('anyProfilePage',username
+				<a class="font-weight-bold text-primary" href="{{url_for('users.anyProfilePage',username
 				=post.author.username)}}">{{post.author.username}}</a>
 				<small class="text-muted">on {{post.date_posted.strftime('%d-%m-%Y')}}</small>
 
@@ -27,7 +27,7 @@
 				<div class="row justify-content-center">
 					<div class="col-md-12">
 						<span>
-							<span class="font-weight-bold"><a href="{{url_for('anyProfilePage',username
+							<span class="font-weight-bold"><a href="{{url_for('users.anyProfilePage',username
 							=comment.author.username)}}" class="text-dark">{{comment.author.username }}</a></span> 
 							{{comment.content}}
 							{% if comment.author==current_user %}
