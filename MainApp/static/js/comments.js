@@ -1,8 +1,11 @@
+const BASE_URL = 'http://127.0.0.1:5000'
+const SEND_URL = `${BASE_URL}/comment/new/`;
+const DELETE_URL = `${BASE_URL}/comment/delete/`;
+
 const commentForm = document.getElementById('comment-form');
 const commentBtn = document.getElementById("comment-btn");
 const commentColumn = document.getElementById('comments-column');
-const SENDURL = 'http://127.0.0.1:5000/comment/new/';
-const DELETEURL = 'http://127.0.0.1:5000/comment/delete/';
+
 
 function createAddClassElement(typeElement,classes){
 	const newEl = document.createElement(typeElement);
@@ -56,7 +59,7 @@ function sendComment(event){
 		comment: commentText
 	};
 
-	fetch(SENDURL,{
+	fetch(SEND_URL,{
 		method:'POST',
 		body:JSON.stringify(comment),
 		headers:{
@@ -86,7 +89,7 @@ function deleteComment(event){
 		comment_id: commentId
 	};
 	// console.log(comment);
-	fetch(DELETEURL,{
+	fetch(DELETE_URL,{
 		method:'POST',
 		body:JSON.stringify(comment),
 		headers:{
