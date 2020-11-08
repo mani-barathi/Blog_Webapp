@@ -1,7 +1,10 @@
 from flask import render_template,request,flash,redirect,url_for,abort,Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import desc
-from MainApp import  db, bcrypt
+from flask_mail import Message
+from threading import Thread
+
+from MainApp import  db, bcrypt, mail ,app
 from MainApp.models import User, Posts
 from MainApp.users.forms import LoginForm, SignUpForm
 
@@ -20,6 +23,8 @@ def signUpPage():
 		user = User(username=username, password=hashed_password, email=email)			
 		db.session.add(user)
 		db.session.commit()	
+		thread = Thread(target=sendMail, args=(user,app,))
+		thread.start()
 		flash(f'Account Created for {username}')
 		return redirect(url_for('users.loginPage'))
 
@@ -74,9 +79,15 @@ def anyProfilePage(username):
 
 
 
-
-
-
+def sendMail(user,mail_app):
+	msg = Message('Account Created at Blog Sharing Platform',sender='noreply@blog.com',recipients=[user.email])
+	msg.body = f'''
+			Hello, {user.username} we are glad that you created a account at Blog Sharing Platform.
+			Start writing your blogs!!			
+	'''
+	with app.app_context():
+		mail.send(msg)
+	print('mail sent############')
 
 
 # @app.route('/comment/new/<int:post_id>',methods=["GET","POST"])
