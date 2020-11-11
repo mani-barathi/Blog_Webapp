@@ -49,7 +49,12 @@
 	</div>
 
 {% else %}
-
+	<div class="row justify-content-center">
+		<div class="col-md-10">
+			 <h2> Welcome to Blog Application !</h2>
+			 <h4>Please <a href="{{url_for('users.loginPage')}}">Login</a> or <a href="{{url_for('users.signUpPage')}}">Sign Up</a></h4>
+		</div>
+	</div>
 {% endif %}
 
 <button  id="myBtn" class="rounded-circle text-dark" title="Go to top"><i class="fas fa-arrow-up"></i></button>
