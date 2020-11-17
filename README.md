@@ -11,6 +11,6 @@ Clich [Here](https://flaskblogapplication.herokuapp.com/ "BlogApp") to visit the
 #### Modules used in Flask
 1. **Flask Login** for the login system
 2. **Flask Bcrypt** for hashing the user passwords
-3. **SQLAlchemy** for querying database. 
+3. **SQLAlchemy**(ORM - Object Relational Mapper) for querying database. 
 4. **Flask Mail** for sending emails to users
 
