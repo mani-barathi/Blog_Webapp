@@ -2,6 +2,9 @@
 Web Application developed using Flask, Vanilla JS and Bootstrap, where users can signup, login ,create, edit and comment on Blogs.
 
 Clich [Here](https://flaskblogapplication.herokuapp.com/ "BlogApp") to visit the page
+**test user credentials:**
+email  - sampledemo029@gmail.com
+password - testpassword
 
 #### Technology Used
 1. **Flask** 
