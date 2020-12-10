@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt   			# pip install --no-use-pep517 flask-bcrypt
 from flask_login import LoginManager        # pip install flask-login
 from flask_mail import Mail
+from flask_cors import CORS 				# pip install flask-cors
+
 from MainApp.config import Config
 
 
@@ -15,6 +17,7 @@ login_manager.login_view = 'users.loginPage'
 
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object(Config)
 
 db.init_app(app) 

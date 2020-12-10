@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:5000'
+const BASE_URL = 'http://127.0.0.1:5000'	// change this URL in production
 const SEND_URL = `${BASE_URL}/comment/new/`;
 const DELETE_URL = `${BASE_URL}/comment/delete/`;
 
